@@ -6,14 +6,23 @@ const AdminValidator = require('../Validators/adminValidator');
 const generateJWT = require('../utils/generateJWT');
 const verifyPass = require('../utils/verifyPassword');
 const hashPassword = require('../utils/passwordHash');
-const decryptJWT = require('../utils/decryptJWT')
+const decryptJWT = require('../utils/decryptJWT');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+
+// const swaggerDocument = require('./swagger.json');
+
+// router.use('/api-docs', swaggerUi.serve);
+// router.get('/api-docs', swaggerUi.setup(swaggerDocument));
+
+
+
 
 
 
 const router = express.Router();
 
 
-router.use(homeRoute);
 
 
 router.get('/login', async (req, res)=>
@@ -36,7 +45,6 @@ router.get('/login', async (req, res)=>
     {
         res.send('User Has Entered Wrong details');
     }
-
 
     try 
     {
@@ -65,6 +73,17 @@ router.get('/login', async (req, res)=>
         const userAccess = generateJWT(user);
 
 
+        const result= {         
+
+        }
+
+        result.status = true
+        result.message = "Login Successful"
+        result.admin= user
+        result.accessToken = userAccess
+        
+
+
 
         // res.send(
         //     status: true,
@@ -74,7 +93,12 @@ router.get('/login', async (req, res)=>
         // )
         
 
-        res.send("Login Successful");
+        res.json({
+            result           
+
+        })
+
+        
 
         
         
@@ -90,14 +114,15 @@ router.get('/login', async (req, res)=>
     
 })
 
-router.post('/signup/', async (req, res)=>
+router.post('/signup', async (req, res)=>
 {
     
         
 
-        // const email = req.body.email;
+        
 
-       const {body} = req; 
+       const {body} = req;
+        
         
 
         const resultFromJoi =  AdminValidator('firstName lastName email password mobileNumber title', body);
@@ -157,7 +182,12 @@ router.post('/signup/', async (req, res)=>
 
                 admin.save();
 
-               res.send('Signup Successful');
+            res.json({
+                   status: true,
+                   message: "Signup Successfull",
+                   user: admin,
+                   accessToken: newJWT
+               })
 
             
         }
@@ -264,5 +294,109 @@ async function context(req, res , next) {
 
     
 }
+
+
+
+const swaggerOptions = {
+    definition: {
+      openapi: "3.0.0",
+      info: {
+        title: "CyberFlow Rest Login",
+        version: "1.0.0",
+        description:
+          "This is a simple CRUD API application made with Express and documented with Swagger",
+        license: {
+          name: "CBF",
+          url: "https://spdx.org/licenses/MIT.html",
+        },
+        contact: {
+          name: "Sidharth Choudhary",
+          url: "https://time-plot.netlify.app",
+          email: "choudharysidharth082000@gmail.com",
+        },
+      },
+      servers: [
+        {
+          url: "http://localhost:3000",
+        },
+      ],
+    },
+    apis: ["./Express Routers/routes.js"],
+  };
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+ console.log(swaggerDocs);
+ 
+/**
+ * @openapi
+ * /login:
+ *   get:
+ *      summary: Login User
+ *      description: Login The existing User to the App
+ *      requestBody:
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      properties:
+ *                          email:
+ *                              type: string 
+ *                              description: Email for the existing user 
+ *                              required: true
+ *                          password:
+ *                              type: string 
+ *                              description: Password for the user 
+ *                              required: true
+ *      responses:
+ *          200:
+ *              description: Status Good                
+ * 
+ *    
+ */
+
+/**
+ * @openapi
+ * /signup:
+ *   post:
+ *      summary: Signup User
+ *      description: Signup The existing User to the App
+ *      requestBody:
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      properties:
+ *                          email:
+ *                              type: string 
+ *                              description: Email for the existing user 
+ *                              required: true
+ *                          password:
+ *                              type: string 
+ *                              description: Password for the user 
+ *                              required: true
+ *                          firstName:
+ *                              type: string 
+ *                              description: First Name for the user 
+ *                              required: true
+ *                          lastName:
+ *                              type: string 
+ *                              description: LastName  for the user 
+ *                              required: true
+ *                          mobileNumber:
+ *                              type: number 
+ *                              description: Phone for the user 
+ *                              required: true
+ *                          title:
+ *                              type: string 
+ *                              description: Title for the user 
+ *                              required: true
+ *      responses:
+ *          200:
+ *              description: Status Good                
+ * 
+ *    
+ */
+
+ 
+
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 module.exports = router;

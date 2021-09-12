@@ -2,11 +2,25 @@ GET http://localhost:3000/login
 
 ###
 
-POST http://localhost:3000/logout/
+POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
-    "accessToken": "123"
+    "firstName": "Anushka",
+    "lastName": "Singh",
+    "mobileNumber": "9868213256",
+    "title": "Mr",
+    "email": "anasingh@gmail.com",
+    "password" : "ishugudda123"
 }
 
+###
 
+
+GET http://localhost:3000/login/
+Content-Type: application/json
+
+{
+    "email": "cansing0@gmail.com",
+    "password": "ishugudda123"
+}

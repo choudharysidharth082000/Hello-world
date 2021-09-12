@@ -7,7 +7,9 @@ const express = require('express');
 const LoginRoute = require('./Express Routers/routes');
 // const bcrypt = require('brcypt');
 const mongoose = require('mongoose');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerDocument = require('./swagger.json');
 
 // -------------------end_here----------------------------------------------
 
