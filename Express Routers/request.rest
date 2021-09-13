@@ -17,10 +17,21 @@ Content-Type: application/json
 ###
 
 
-GET http://localhost:3000/login/
+POST http://localhost:3000/login/
 Content-Type: application/json
 
 {
     "email": "cansing0@gmail.com",
     "password": "ishugudda123"
 }
+
+###
+
+POST  http://localhost:3000/logout/
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTMyNWJmMjQzZmU4ZDBjYzcyNmM5YzIiLCJlbWFpbCI6ImNhbnNpbmcwQGdtYWlsLmNvbSIsImlhdCI6MTYzMTUxMjA3MywiZXhwIjoxNjMxNTQ4MDczLCJpc3MiOiJBc3NpZ25tZW50IEN5YmVyRmxvdyJ9.WhujWx9O2w771__YnjVS1deG4TuvslbSU1ROHgvXZ9l58uGQxI5ks32FOwr6hVhjNsfzGKeJeMUzOKSEjE01P9A0r81u4QH8CixENQy1NaDZR6LGte5Wp-3GgjMmtMZSJAkHvrhDSo4IWT-uuYKSGQo4r-llUMgbZ6QhJ_NttH"
+}
+
+Authorization: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTMyNWJmMjQzZmU4ZDBjYzcyNmM5YzIiLCJlbWFpbCI6ImNhbnNpbmcwQGdtYWlsLmNvbSIsImlhdCI6MTYzMTUxMjA3MywiZXhwIjoxNjMxNTQ4MDczLCJpc3MiOiJBc3NpZ25tZW50IEN5YmVyRmxvdyJ9.WhujWx9O2w771__YnjVS1deG4TuvslbSU1ROHgvXZ9l58uGQxI5ks32FOwr6hVhjNsfzGKeJeMUzOKSEjE01P9A0r81u4QH8CixENQy1NaDZR6LGte5Wp-3GgjMmtMZSJAkHvrhDSo4IWT-uuYKSGQo4r-llUMgbZ6QhJ_NttH"

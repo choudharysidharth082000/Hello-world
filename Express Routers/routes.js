@@ -25,7 +25,7 @@ const router = express.Router();
 
 
 
-router.get('/login', async (req, res)=>
+router.post('/login', async (req, res)=>
 {
     
 
@@ -203,12 +203,13 @@ router.post('/signup', async (req, res)=>
 
 router.post('/logout',context, async (req,res)=>
 {
+    console.log(res.isLoggedIN);
     if(!res.isLoggedIN) {
         throw new Error('User Not Logged In');
     }
     let {_id} = res.user._id;
     console.log(_id);
-    const {body} =req;
+    const {accessToken} =req.body;
     
 
 
@@ -221,7 +222,7 @@ router.post('/logout',context, async (req,res)=>
         {
                     try 
             {
-                const newuser = await new AdminSessionModel({userID: _id,token:body, lastAccessedAt: new Date(), isActive: false,sessionLogs: `User Logged Out at ${new Date()}`});
+                const newuser = await new AdminSessionModel({userID: _id,token:accessToken, lastAccessedAt: new Date(), isActive: false,sessionLogs: `User Logged Out at ${new Date()}`});
                 try{
 
                     const saving = await newuser.save();
@@ -330,7 +331,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 /**
  * @openapi
  * /login:
- *   get:
+ *   post:
  *      summary: Login User
  *      description: Login The existing User to the App
  *      requestBody:
