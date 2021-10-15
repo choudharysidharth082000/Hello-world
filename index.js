@@ -65,7 +65,7 @@ app.use(bodyParser.json())
 
 
 app.use(LoginRoute);
-app.listen(3000, ()=>
+app.listen(port, ()=>
 {
     console.log(`Server up and running on port ${port}`);
 })
